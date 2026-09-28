@@ -1,201 +1,94 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+const heartsBg = document.getElementById('heartsBg');
+const heartEmojis = ['❤️', '💖', '💕', '💗', '🌸'];
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart-float');
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+    heart.style.fontSize = Math.random() * 12 + 18 + 'px';
+    
+    heartsBg.appendChild(heart);
+
+    setTimeout(() => { heart.remove(); }, 5000);
 }
 
-body {
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-}
+setInterval(createHeart, 300);
 
-/* Background animasi Love/Hati */
-.hearts-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 1;
-}
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
 
-.heart {
-    position: absolute;
-    bottom: -20px;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.7);
-    animation: floatUp linear infinite;
-}
+const giftBox = document.getElementById('giftBox');
+const slider = document.getElementById('loveSlider');
+const sliderValue = document.getElementById('sliderValue');
+const feedbackText = document.getElementById('feedbackText');
+const btnBukaKado = document.getElementById('btnBukaKado');
+const btnRestart = document.getElementById('btnRestart');
+const messagesList = document.getElementById('messagesList');
 
-@keyframes floatUp {
-    0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 1;
+const allMessages = [
+    "1. Makasih yaa udah selalu ada buat aku dan bikin hari-hariku lebih indah 💕",
+    "2. Kamu itu alasan utama aku sering senyum-senyum sendiri tiap hari 🥰",
+    "3. Gemes banget sih kamu, jangan galak-galak yaa sayang 😜",
+    "4. Setiap momen sama kamu selalu jadi hal favorit buat aku ✨",
+    "5. Semoga kita bisa terus bareng-bareng dan makin sayang satu sama lain 🌹",
+    "6. Makasih udah sabar meladeni sifat aku yang kadang ajaib ini 🥺",
+    "7. Kamu adalah kado paling indah yang pernah hadir di hidup aku 🎁❤️",
+    "8. Jangan lupa jaga kesehatan yaa sayang, aku selalu dukung kamu!",
+    "9. Aku sayang banget sama kamu, melebihi apa yang bisa diucapkan kata-kata 😘",
+    "10. Tetap jadi diri kamu yang lucu, gemes, dan menyenangkan yaa 💕",
+    "11. Apapun yang terjadi, aku bakal tetap pilih kamu lagi dan lagi 💖",
+    "12. Jangan lupa makan yaa manis, nanti kangennya berkurang kalau sakit 😜"
+];
+
+giftBox.addEventListener('click', () => {
+    step1.classList.add('hidden');
+    step2.classList.remove('hidden');
+});
+
+slider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    sliderValue.textContent = val + '%';
+
+    if (val < 40) {
+        feedbackText.textContent = "yahh ga sayang aku nih?";
+        btnBukaKado.classList.add('hidden');
+    } else if (val >= 40 && val < 70) {
+        feedbackText.textContent = "koo kayaa ga niat gitu sayangnya sih";
+        btnBukaKado.classList.add('hidden');
+    } else if (val >= 70 && val < 100) {
+        feedbackText.textContent = "ihhh tanggung banget, males ah";
+        btnBukaKado.classList.add('hidden');
+    } else if (val === 100) {
+        feedbackText.textContent = "Yey kamuu beneran sayangg banget sama aku 🥰💖";
+        btnBukaKado.classList.remove('hidden');
     }
-    100% {
-        transform: translateY(-105vh) scale(1.2);
-        opacity: 0;
-    }
-}
+});
 
-/* Container utama kartu */
-.card-container {
-    position: relative;
-    z-index: 2;
-    width: 90%;
-    max-width: 450px;
-}
+btnBukaKado.addEventListener('click', () => {
+    step2.classList.add('hidden');
+    step3.classList.remove('hidden');
 
-.card {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
-    text-align: center;
-    backdrop-filter: blur(5px);
-    transition: all 0.5s ease;
-}
+    const shuffled = [...allMessages].sort(() => 0.5 - Math.random()).slice(0, 10);
 
-.hidden {
-    display: none;
-    opacity: 0;
-    transform: scale(0.9);
-}
+    messagesList.innerHTML = '';
+    shuffled.forEach(msg => {
+        const item = document.createElement('div');
+        item.classList.add('message-item');
+        item.textContent = msg;
+        messagesList.appendChild(item);
+    });
+});
 
-.active {
-    display: block;
-    opacity: 1;
-    transform: scale(1);
-}
+btnRestart.addEventListener('click', () => {
+    slider.value = 50;
+    sliderValue.textContent = '50%';
+    feedbackText.textContent = "koo kayaa ga niat gitu sayangnya sih";
+    btnBukaKado.classList.add('hidden');
 
-h1.title, h2 {
-    color: #d63384;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-}
+    step3.classList.add('hidden');
+    step1.classList.remove('hidden');
+});
 
-/* Desain Kado Merah */
-.gift-box {
-    width: 120px;
-    height: 120px;
-    background: #e63946;
-    margin: 20px auto;
-    position: relative;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 8px 15px rgba(230, 57, 70, 0.4);
-    animation: pulse 1.5s infinite ease-in-out;
-}
-
-.gift-box:hover {
-    transform: scale(1.08);
-}
-
-.ribbon-v {
-    position: absolute;
-    width: 24px;
-    height: 100%;
-    background: #ffb703;
-    left: 48px;
-}
-
-.ribbon-h {
-    position: absolute;
-    width: 100%;
-    height: 24px;
-    background: #ffb703;
-    top: 48px;
-}
-
-.bow {
-    position: absolute;
-    width: 40px;
-    height: 20px;
-    background: #ffb703;
-    top: -15px;
-    left: 40px;
-    border-radius: 20px 20px 0 0;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* Slider Sayang */
-.slider-box {
-    margin: 20px 0;
-}
-
-#slider-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #e63946;
-    display: block;
-    margin-bottom: 10px;
-}
-
-input[type=range] {
-    width: 100%;
-    accent-color: #ff4d6d;
-    cursor: pointer;
-}
-
-.feedback-text {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #c7254e;
-    min-height: 50px;
-    margin-top: 15px;
-}
-
-/* Tombol */
-.btn {
-    background: #ff4d6d;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 15px;
-    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background: #c7254e;
-    transform: translateY(-2px);
-}
-
-/* Daftar Kata-kata */
-.messages-list {
-    max-height: 250px;
-    overflow-y: auto;
-    text-align: left;
-    padding: 10px;
-    background: #fff0f3;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.message-item {
-    background: white;
-    padding: 10px 12px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: #555;
-    border-left: 4px solid #ff4d6d;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-  
