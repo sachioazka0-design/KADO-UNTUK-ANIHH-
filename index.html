@@ -5,48 +5,352 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kado Spesial Untukmu ❤️</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Menggunakan font Google 'Poppins' agar lebih estetik -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffe6ea 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animasi Hati / Love di Background */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-float {
+            position: absolute;
+            bottom: -30px;
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-110vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Kartu Utama */
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 12px 30px rgba(255, 105, 180, 0.35);
+            text-align: center;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h2 {
+            color: #ff3366;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Desain Kado Merah */
+        .gift-wrapper {
+            margin: 25px auto;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .gift-box {
+            width: 120px;
+            height: 120px;
+            background: #e60033;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(230, 0, 51, 0.4);
+            animation: pulse 1.5s infinite ease-in-out;
+            transition: transform 0.3s;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        .ribbon-v {
+            position: absolute;
+            width: 24px;
+            height: 100%;
+            background: #ffcc00;
+            left: 48px;
+        }
+
+        .ribbon-h {
+            position: absolute;
+            width: 100%;
+            height: 24px;
+            background: #ffcc00;
+            top: 48px;
+        }
+
+        .bow {
+            position: absolute;
+            width: 44px;
+            height: 22px;
+            background: #ffcc00;
+            top: -15px;
+            left: 38px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        /* Slider Rating */
+        .slider-wrapper {
+            margin: 25px 0 15px 0;
+        }
+
+        .slider-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ff3366;
+            margin-bottom: 10px;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #ff3366;
+            cursor: pointer;
+            height: 8px;
+        }
+
+        .feedback-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #cc0044;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        /* Tombol */
+        .btn {
+            background: #ff3366;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #e6004c;
+            transform: translateY(-2px);
+        }
+
+        /* List 10 Kata-Kata */
+        .messages-list {
+            max-height: 260px;
+            overflow-y: auto;
+            text-align: left;
+            padding: 12px;
+            background: #fff0f3;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .message-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            color: #444;
+            border-left: 4px solid #ff3366;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Background animasi hati -->
-    <div class="hearts-bg" id="hearts-container"></div>
+    <!-- Background Animasi Love -->
+    <div class="hearts-bg" id="heartsBg"></div>
 
-    <div class="card-container">
-        <!-- TAMPILAN 1: Tekan Kado -->
-        <div id="step-1" class="card active">
-            <h1 class="title">Tekan kadonya yaa sayang ❤️</h1>
-            <div class="gift-box" id="gift-box">
-                <div class="ribbon-v"></div>
-                <div class="ribbon-h"></div>
-                <div class="bow"></div>
+    <div class="container">
+        <!-- LANGKAH 1: Kado Merah -->
+        <div id="step1" class="card">
+            <h2>tekan kadonya yaa sayang ❤️</h2>
+            <div class="gift-wrapper" id="giftBox">
+                <div class="gift-box">
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                    <div class="bow"></div>
+                </div>
             </div>
         </div>
 
-        <!-- TAMPILAN 2: Rating Sayang -->
-        <div id="step-2" class="card hidden">
-            <h2>Seberapa sayang kamu sama aku? 🥺💖</h2>
-            
-            <div class="slider-box">
-                <span id="slider-value">50%</span>
-                <input type="range" id="love-slider" min="0" max="100" value="50">
+        <!-- LANGKAH 2: Slider Sayang -->
+        <div id="step2" class="card hidden">
+            <h2>seberapa sayang kamu sama aku? 🥺💖</h2>
+            <div class="slider-wrapper">
+                <div class="slider-value" id="sliderValue">50%</div>
+                <input type="range" id="loveSlider" min="0" max="100" value="50">
             </div>
-
-            <p id="feedback-text" class="feedback-text">koo kayaa ga niat gitu sayangnya sih</p>
-
-            <button id="btn-buka-kado" class="btn hidden">Buka Kado 🎁</button>
+            <p id="feedbackText" class="feedback-text">koo kayaa ga niat gitu sayangnya sih</p>
+            <button id="btnBukaKado" class="btn hidden">buka kado 🎁</button>
         </div>
 
-        <!-- TAMPILAN 3: 10 Kata-kata Manis -->
-        <div id="step-3" class="card hidden">
-            <h2>Yeay! Ini 10 Alasan & Kata-kata Sayang Buat Kamu 💖✨</h2>
-            <div class="messages-list" id="messages-list"></div>
-            <button id="btn-restart" class="btn">Ulangi Dari Awal ❤️</button>
+        <!-- LANGKAH 3: 10 Kata-Kata Acak -->
+        <div id="step3" class="card hidden">
+            <h2>Yeay! Ini 10 pesan manis buat kamu ✨💖</h2>
+            <div class="messages-list" id="messagesList"></div>
+            <button id="btnRestart" class="btn">Ulangi lagi ❤️</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // 1. Membuat animasi love di background
+        const heartsBg = document.getElementById('heartsBg');
+        const heartEmojis = ['❤️', '💖', '💕', '💗', '🌸'];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 12 + 18 + 'px';
+            
+            heartsBg.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Element Referensi
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+
+        const giftBox = document.getElementById('giftBox');
+        const slider = document.getElementById('loveSlider');
+        const sliderValue = document.getElementById('sliderValue');
+        const feedbackText = document.getElementById('feedbackText');
+        const btnBukaKado = document.getElementById('btnBukaKado');
+        const btnRestart = document.getElementById('btnRestart');
+        const messagesList = document.getElementById('messagesList');
+
+        // Kumpulan Kata-kata Manis
+        const allMessages = [
+            "1. Makasih yaa udah selalu ada buat aku dan bikin hari-hariku lebih indah 💕",
+            "2. Kamu itu alasan utama aku sering senyum-senyum sendiri tiap hari 🥰",
+            "3. Gemes banget sih kamu, jangan galak-galak yaa sayang 😜",
+            "4. Setiap momen sama kamu selalu jadi hal favorit buat aku ✨",
+            "5. Semoga kita bisa terus bareng-bareng dan makin sayang satu sama lain 🌹",
+            "6. Makasih udah sabar meladeni sifat aku yang kadang ajaib ini 🥺",
+            "7. Kamu adalah kado paling indah yang pernah hadir di hidup aku 🎁❤️",
+            "8. Jangan lupa jaga kesehatan yaa sayang, aku selalu dukung kamu!",
+            "9. Aku sayang banget sama kamu, melebihi apa yang bisa diucapkan kata-kata 😘",
+            "10. Tetap jadi diri kamu yang lucu, gemes, dan menyenangkan yaa 💕",
+            "11. Apapun yang terjadi, aku bakal tetap pilih kamu lagi dan lagi 💖",
+            "12. Jangan lupa makan yaa manis, nanti kangennya berkurang kalau sakit 😜"
+        ];
+
+        // Klik Kado Merah
+        giftBox.addEventListener('click', () => {
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+        });
+
+        // Logika Slider
+        slider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            sliderValue.textContent = val + '%';
+
+            if (val < 40) {
+                feedbackText.textContent = "yahh ga sayang aku nih?";
+                btnBukaKado.classList.add('hidden');
+            } else if (val >= 40 && val < 70) {
+                feedbackText.textContent = "koo kayaa ga niat gitu sayangnya sih";
+                btnBukaKado.classList.add('hidden');
+            } else if (val >= 70 && val < 100) {
+                feedbackText.textContent = "ihhh tanggung banget, males ah";
+                btnBukaKado.classList.add('hidden');
+            } else if (val === 100) {
+                feedbackText.textContent = "Yey kamuu beneran sayangg banget sama aku 🥰💖";
+                btnBukaKado.classList.remove('hidden');
+            }
+        });
+
+        // Klik Buka Kado
+        btnBukaKado.addEventListener('click', () => {
+            step2.classList.add('hidden');
+            step3.classList.remove('hidden');
+
+            // Acak kata-kata dan ambil 10
+            const shuffled = [...allMessages].sort(() => 0.5 - Math.random()).slice(0, 10);
+
+            messagesList.innerHTML = '';
+            shuffled.forEach(msg => {
+                const item = document.createElement('div');
+                item.classList.add('message-item');
+                item.textContent = msg;
+                messagesList.appendChild(item);
+            });
+        });
+
+        // Tombol Ulangi
+        btnRestart.addEventListener('click', () => {
+            slider.value = 50;
+            sliderValue.textContent = '50%';
+            feedbackText.textContent = "koo kayaa ga niat gitu sayangnya sih";
+            btnBukaKado.classList.add('hidden');
+
+            step3.classList.add('hidden');
+            step1.classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
