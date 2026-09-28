@@ -1,1 +1,52 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kado Spesial Untukmu ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Menggunakan font Google 'Poppins' agar lebih estetik -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background animasi hati -->
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <div class="card-container">
+        <!-- TAMPILAN 1: Tekan Kado -->
+        <div id="step-1" class="card active">
+            <h1 class="title">Tekan kadonya yaa sayang ❤️</h1>
+            <div class="gift-box" id="gift-box">
+                <div class="ribbon-v"></div>
+                <div class="ribbon-h"></div>
+                <div class="bow"></div>
+            </div>
+        </div>
+
+        <!-- TAMPILAN 2: Rating Sayang -->
+        <div id="step-2" class="card hidden">
+            <h2>Seberapa sayang kamu sama aku? 🥺💖</h2>
+            
+            <div class="slider-box">
+                <span id="slider-value">50%</span>
+                <input type="range" id="love-slider" min="0" max="100" value="50">
+            </div>
+
+            <p id="feedback-text" class="feedback-text">koo kayaa ga niat gitu sayangnya sih</p>
+
+            <button id="btn-buka-kado" class="btn hidden">Buka Kado 🎁</button>
+        </div>
+
+        <!-- TAMPILAN 3: 10 Kata-kata Manis -->
+        <div id="step-3" class="card hidden">
+            <h2>Yeay! Ini 10 Alasan & Kata-kata Sayang Buat Kamu 💖✨</h2>
+            <div class="messages-list" id="messages-list"></div>
+            <button id="btn-restart" class="btn">Ulangi Dari Awal ❤️</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
